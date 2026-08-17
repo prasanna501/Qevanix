@@ -14,7 +14,7 @@ const app = express();
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(
   cors({
-    origin: [ENV.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000'],
+    origin: true,
     credentials: true,
   })
 );
@@ -30,7 +30,7 @@ const publicDir = path.resolve(__dirname, '../../public');
 app.use('/public', express.static(publicDir));
 
 // System Health Check Endpoint
-app.get('/api/health', async (_req, res) => {
+app.get(['/api/health', '/health'], async (_req, res) => {
   const dbStatus = await checkDatabaseConnection();
   res.status(dbStatus.connected ? 200 : 503).json({
     status: dbStatus.connected ? 'healthy' : 'degraded',
@@ -48,12 +48,13 @@ app.get('/api/health', async (_req, res) => {
 
 // Mount Main API Routes
 app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // Centralized Error Handling Middleware
 app.use(errorHandler);
 
-// Start Server
-if (process.env.NODE_ENV !== 'test') {
+// Start Server (standalone only, skipped on serverless platforms like Vercel)
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   app.listen(ENV.PORT, async () => {
     console.log(`\n======================================================`);
     console.log(`🚀 QEVANIX BACKEND SERVER RUNNING ON PORT: ${ENV.PORT}`);
