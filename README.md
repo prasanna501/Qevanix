@@ -82,23 +82,28 @@ npm run install:all
 ```
 
 ### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
+Copy `.env.example` to `.env` and configure your environment variables:
 ```bash
+cp .env.example .env
+```
+
+Ensure you update the variables in `.env` with your secure configuration:
+```env
 # Server & Database Settings
 PORT=5000
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
 
 # PostgreSQL Connection
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/portfolio_db?schema=public"
+DATABASE_URL="your-production-database-url"
 
 # Auth Secrets
-JWT_SECRET=super_secure_jwt_secret_key_qevanix_portfolio_2026_9837492834
+JWT_SECRET=your-secure-random-secret
 JWT_EXPIRES_IN=7d
 
-# Default Seed Admin Credentials
-ADMIN_EMAIL=admin@qevanix.dev
-ADMIN_PASSWORD=admin123
+# Admin Credentials
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your-secure-admin-password
 ADMIN_NAME="Admin Qevanix"
 
 # Frontend API URL
@@ -121,17 +126,13 @@ npm run dev
 - **Frontend App**: `http://localhost:5173`
 - **Backend API**: `http://localhost:5000/api`
 - **API Health Check**: `http://localhost:5000/api/health`
-- **Admin Dashboard**: `http://localhost:5173/admin` (Login: `admin@qevanix.dev` / `admin123`)
+- **Admin Dashboard**: `http://localhost:5173/admin`
 
 ---
 
 ## 🔑 Default Admin Credentials
 
-| Role | Email | Password |
-|---|---|---|
-| **Administrator** | `admin@qevanix.dev` | `admin123` |
-
-*(You can also click the **"Autofill default seed credentials"** button on the `/admin/login` page for one-click authentication).*
+Use the admin credentials configured in the environment variables.
 
 ---
 
