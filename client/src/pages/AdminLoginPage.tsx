@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../services/api';
-import { Terminal, Lock, Mail, Loader2, ArrowLeft, ShieldCheck, KeyRound } from 'lucide-react';
+import { Lock, Mail, Loader2, ArrowLeft, ShieldCheck } from 'lucide-react';
 
 export const AdminLoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,11 +12,6 @@ export const AdminLoginPage: React.FC = () => {
   const { login } = useAuth();
   const { success, error } = useToast();
   const navigate = useNavigate();
-
-  const handleFillDemo = () => {
-    setEmail('admin@qevanix.dev');
-    setPassword('admin123');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +79,7 @@ export const AdminLoginPage: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@qevanix.dev"
+                  placeholder="admin@example.com"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-indigo-500"
                   required
                 />
@@ -123,20 +118,9 @@ export const AdminLoginPage: React.FC = () => {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Credentials Autofill */}
-          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
-            <button
-              onClick={handleFillDemo}
-              type="button"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
-            >
-              <KeyRound className="w-3.5 h-3.5" />
-              <span>Autofill default seed credentials (admin@qevanix.dev)</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
   );
 };
+
