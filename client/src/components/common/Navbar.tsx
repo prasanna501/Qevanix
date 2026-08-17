@@ -39,29 +39,24 @@ export const Navbar: React.FC = () => {
     { label: 'Services', href: '/#services' },
     { label: 'Projects', href: '/#projects' },
     { label: 'Experience', href: '/#experience' },
-    { label: 'Resume', href: '/resume', isRoute: true },
-    { label: 'Blog', href: '/blog', isRoute: true },
+    { label: 'Resume', href: '/#resume' },
+    { label: 'Blog', href: '/#blog' },
     { label: 'FAQ', href: '/#faq' },
   ];
 
-  const handleNavClick = (href: string, isRoute?: boolean) => {
+  const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    if (isRoute) {
-      navigate(href);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const targetHash = href.startsWith('/#') ? href.substring(1) : href;
+    const id = targetHash.replace('#', '');
+    if (location.pathname !== '/') {
+      navigate(`/${targetHash}`);
     } else {
-      const targetHash = href.startsWith('/#') ? href.substring(1) : href;
-      const id = targetHash.replace('#', '');
-      if (location.pathname !== '/') {
-        navigate(`/${targetHash}`);
+      const elem = document.getElementById(id);
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `/#${id}`);
       } else {
-        const elem = document.getElementById(id);
-        if (elem) {
-          elem.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', `/#${id}`);
-        } else {
-          navigate(`/${targetHash}`);
-        }
+        navigate(`/${targetHash}`);
       }
     }
   };
@@ -106,7 +101,7 @@ export const Navbar: React.FC = () => {
             {navLinks.map((link) => (
               <button
                 key={link.label}
-                onClick={() => handleNavClick(link.href, link.isRoute)}
+                onClick={() => handleNavClick(link.href)}
                 className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800/90 transition-all"
               >
                 {link.label}
@@ -187,7 +182,7 @@ export const Navbar: React.FC = () => {
               {navLinks.map((link) => (
                 <button
                   key={link.label}
-                  onClick={() => handleNavClick(link.href, link.isRoute)}
+                  onClick={() => handleNavClick(link.href)}
                   className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-left"
                 >
                   <span>{link.label}</span>
