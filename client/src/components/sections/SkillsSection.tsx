@@ -70,7 +70,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ initialSkills }) =
   };
 
   return (
-    <section id="skills" className="py-24 relative bg-slate-100/40 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
+    <section id="skills" className="py-24 scroll-mt-20 relative bg-slate-100/40 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Technical Arsenal"

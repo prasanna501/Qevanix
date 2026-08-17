@@ -80,14 +80,21 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
   const handleSelect = (href: string) => {
     onClose();
     if (href.startsWith('/#')) {
-      navigate('/');
-      setTimeout(() => {
-        const id = href.replace('/#', '');
+      const id = href.replace('/#', '');
+      if (window.location.pathname !== '/') {
+        navigate(`/#${id}`);
+      } else {
         const elem = document.getElementById(id);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `/#${id}`);
+        } else {
+          navigate(`/#${id}`);
+        }
+      }
     } else {
       navigate(href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

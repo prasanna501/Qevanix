@@ -27,7 +27,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ initia
   }, [initialTestimonials]);
 
   return (
-    <section id="testimonials" className="py-24 relative bg-slate-50/70 dark:bg-[#070b14] border-t border-slate-200/60 dark:border-slate-800/60">
+    <section id="testimonials" className="py-24 scroll-mt-20 relative bg-slate-50/70 dark:bg-[#070b14] border-t border-slate-200/60 dark:border-slate-800/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Profile } from '../types';
 import { api } from '../services/api';
 import { HeroSection } from '../components/sections/HeroSection';
@@ -14,11 +15,10 @@ import { TestimonialsSection } from '../components/sections/TestimonialsSection'
 import { BlogSection } from '../components/sections/BlogSection';
 import { FAQSection } from '../components/sections/FAQSection';
 import { ContactSection } from '../components/sections/ContactSection';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
 
 export const HomePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     api.getProfile()
@@ -29,17 +29,27 @@ export const HomePage: React.FC = () => {
       })
       .catch((err) => {
         console.error('Failed to load profile details:', err);
-      })
-      .finally(() => setLoading(false));
+      });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoadingSpinner size="lg" text="Loading Qevanix Portfolio System..." />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const scrollToElement = () => {
+        const elem = document.getElementById(id);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      scrollToElement();
+      const timer1 = setTimeout(scrollToElement, 100);
+      const timer2 = setTimeout(scrollToElement, 300);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+  }, [location.pathname, location.hash]);
 
   return (
     <div className="space-y-0">

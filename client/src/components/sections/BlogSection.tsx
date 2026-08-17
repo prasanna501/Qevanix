@@ -29,7 +29,7 @@ export const BlogSection: React.FC<BlogSectionProps> = ({ initialPosts }) => {
   };
 
   return (
-    <section id="blog" className="py-24 relative bg-slate-100/50 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
+    <section id="blog" className="py-24 scroll-mt-20 relative bg-slate-100/50 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>

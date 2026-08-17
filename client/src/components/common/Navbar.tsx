@@ -48,18 +48,20 @@ export const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
     if (isRoute) {
       navigate(href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
+      const targetHash = href.startsWith('/#') ? href.substring(1) : href;
+      const id = targetHash.replace('#', '');
       if (location.pathname !== '/') {
-        navigate('/');
-        setTimeout(() => {
-          const id = href.replace('/#', '');
-          const elem = document.getElementById(id);
-          if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        navigate(`/${targetHash}`);
       } else {
-        const id = href.replace('/#', '');
         const elem = document.getElementById(id);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `/#${id}`);
+        } else {
+          navigate(`/${targetHash}`);
+        }
       }
     }
   };

@@ -22,7 +22,7 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ profile }) => {
   };
 
   return (
-    <section id="resume" className="py-24 relative bg-slate-100/50 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
+    <section id="resume" className="py-24 scroll-mt-20 relative bg-slate-100/50 dark:bg-[#090d16] border-t border-slate-200/60 dark:border-slate-800/60">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Curriculum Vitae"
