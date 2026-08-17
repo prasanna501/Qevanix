@@ -1,0 +1,33 @@
+{
+  "name": "qevanix-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-ready Full-Stack Personal Portfolio Website called Qevanix",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "npm run dev --prefix server",
+    "client:dev": "npm run dev --prefix client",
+    "build": "npm run build --prefix server && npm run build --prefix client",
+    "server:build": "npm run build --prefix server",
+    "client:build": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "prisma:push": "npx prisma db push",
+    "prisma:seed": "npx ts-node --project server/tsconfig.json prisma/seed.ts",
+    "prisma:studio": "npx prisma studio",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prisma": "^5.21.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.21.1",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^16.4.5"
+  }
+}

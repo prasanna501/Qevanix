@@ -1,0 +1,251 @@
+// Prisma Schema for Qevanix Full-Stack Portfolio
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Profile {
+  id                 String   @id @default(uuid())
+  name               String   @default("Qevanix")
+  title              String   @default("Senior Full-Stack Engineer & Cloud Architect")
+  tagline            String?  @default("Crafting resilient high-performance digital products and scalable systems")
+  bio                String   @db.Text
+  aboutSnippet       String?  @db.Text
+  location           String   @default("San Francisco, CA (Open to Remote)")
+  email              String   @default("contact@qevanix.dev")
+  phone              String?  @default("+1 (555) 019-2834")
+  avatarUrl          String?
+  heroHeadline       String   @default("Building next-generation web applications with precision.")
+  heroSubheadline    String   @default("Full-stack engineer specializing in TypeScript, React, Node.js, and Cloud native architecture.")
+  yearsExperience    Int      @default(6)
+  completedProjects  Int      @default(38)
+  satisfiedClients   Int      @default(24)
+  codeCommits        Int      @default(4500)
+  resumeUrl          String?  @default("/sample-resume.pdf")
+  isAvailable        Boolean  @default(true)
+  availabilityStatus String   @default("Available for full-time roles & high-impact contracts")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  DATABASE
+  DEVOPS_CLOUD
+  TOOLS_ARCHITECTURE
+}
+
+model Skill {
+  id          String        @id @default(uuid())
+  name        String
+  category    SkillCategory @default(FRONTEND)
+  proficiency Int           @default(85) // 0 to 100
+  icon        String?       // Lucide icon name or svg
+  order       Int           @default(0)
+  isFeatured  Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([category])
+  @@map("skills")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  icon        String   @default("Code")
+  features    String[] @default([])
+  priceHint   String?
+  isFeatured  Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Project {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  summary        String   @db.Text
+  description    String   @db.Text
+  category       String   @default("Full Stack")
+  tags           String[] @default([])
+  imageUrl       String
+  galleryImages  String[] @default([])
+  demoUrl        String?
+  githubUrl      String?
+  isFeatured     Boolean  @default(false)
+  order          Int      @default(0)
+  clientName     String?
+  completionDate DateTime?
+  metrics        String?  // e.g. "99.9% uptime, 50k DAU"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@map("projects")
+}
+
+model Experience {
+  id             String    @id @default(uuid())
+  role           String
+  company        String
+  companyUrl     String?
+  location       String
+  employmentType String    @default("Full-time") // Full-time, Contract, Remote
+  startDate      DateTime
+  endDate        DateTime?
+  isCurrent      Boolean   @default(false)
+  description    String    @db.Text
+  achievements   String[]  @default([])
+  technologies   String[]  @default([])
+  order          Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("experiences")
+}
+
+model Education {
+  id             String    @id @default(uuid())
+  degree         String
+  fieldOfStudy   String
+  institution    String
+  institutionUrl String?
+  location       String
+  startDate      DateTime
+  endDate        DateTime?
+  isCurrent      Boolean   @default(false)
+  grade          String?
+  activities     String?   @db.Text
+  description    String?   @db.Text
+  order          Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@map("educations")
+}
+
+model Certification {
+  id            String    @id @default(uuid())
+  name          String
+  issuer        String
+  issueDate     DateTime
+  expiryDate    DateTime?
+  credentialId  String?
+  credentialUrl String?
+  badgeUrl      String?
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("certifications")
+}
+
+model Testimonial {
+  id            String   @id @default(uuid())
+  clientName    String
+  clientRole    String
+  clientCompany String
+  clientAvatar  String?
+  content       String   @db.Text
+  rating        Int      @default(5)
+  isFeatured    Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("testimonials")
+}
+
+model BlogPost {
+  id          String    @id @default(uuid())
+  title       String
+  slug        String    @unique
+  summary     String    @db.Text
+  content     String    @db.Text
+  coverImage  String
+  tags        String[]  @default([])
+  category    String    @default("Engineering")
+  readingTime String    @default("5 min read")
+  isPublished Boolean   @default(true)
+  publishedAt DateTime? @default(now())
+  viewsCount  Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@map("blog_posts")
+}
+
+model FAQ {
+  id         String   @id @default(uuid())
+  question   String
+  answer     String   @db.Text
+  category   String   @default("General")
+  order      Int      @default(0)
+  isFeatured Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("faqs")
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  replySent Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isRead])
+  @@map("contact_messages")
+}
+
+model SocialLink {
+  id        String   @id @default(uuid())
+  platform  String   // GitHub, LinkedIn, Twitter, Discord, YouTube, Dribbble
+  url       String
+  icon      String   // Icon key
+  username  String?
+  isVisible Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("social_links")
+}
