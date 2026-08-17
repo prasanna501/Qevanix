@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "REST API Backend for Qevanix Portfolio",
+  "engines": {
+    "node": "24.x"
+  },
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
@@ -20,7 +23,6 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.15",
-    "qevanix-portfolio": "file:..",
     "zod": "^3.23.8"
   },
   "devDependencies": {

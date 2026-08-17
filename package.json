@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "description": "Production-ready Full-Stack Personal Portfolio Website called Qevanix",
+  "engines": {
+    "node": "24.x"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "server:dev": "npm run dev --prefix server",
