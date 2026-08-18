@@ -15,14 +15,15 @@ export const AdminLoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    const trimmedEmail = email.trim().toLowerCase();
+    if (!trimmedEmail || !password) {
       error('Please enter your email and password.', 'Required Fields');
       return;
     }
 
     setLoading(true);
     try {
-      const res = await api.login({ email, password });
+      const res = await api.login({ email: trimmedEmail, password });
       if (res.data.success && res.data.data) {
         login(res.data.data.token, res.data.data.user);
         success(`Welcome back, ${res.data.data.user.name}!`, 'Login Successful');

@@ -7,21 +7,22 @@ import { sendSuccess, sendError } from '../utils/response';
 import { AuthRequest } from '../middleware/authMiddleware';
 
 export const loginSchema = z.object({
-  email: z.string().email('Invalid email address format'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  email: z.string().trim().email('Invalid email address format'),
+  password: z.string().min(1, 'Password is required'),
 });
 
 export const updatePasswordSchema = z.object({
-  currentPassword: z.string().min(6),
+  currentPassword: z.string().min(1),
   newPassword: z.string().min(6, 'New password must be at least 6 characters'),
 });
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = (email || '').trim().toLowerCase();
 
     const user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase() },
+      where: { email: normalizedEmail },
     });
 
     if (!user) {
