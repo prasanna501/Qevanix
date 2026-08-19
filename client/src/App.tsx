@@ -49,14 +49,25 @@ export const App: React.FC = () => {
               <Routes>
                 {/* Public Portfolio Routes */}
                 <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<HomePage />} />
+                <Route path="/skills" element={<HomePage />} />
+                <Route path="/services" element={<HomePage />} />
+                <Route path="/projects" element={<HomePage />} />
                 <Route path="/projects/:idOrSlug" element={<ProjectDetailPage />} />
+                <Route path="/experience" element={<HomePage />} />
+                <Route path="/education" element={<HomePage />} />
+                <Route path="/certifications" element={<HomePage />} />
+                <Route path="/resume" element={<ResumePage />} />
+                <Route path="/contact" element={<HomePage />} />
+                <Route path="/testimonials" element={<HomePage />} />
                 <Route path="/blog" element={<BlogListingPage />} />
                 <Route path="/blog/:slug" element={<BlogPostPage />} />
-                <Route path="/resume" element={<ResumePage />} />
+                <Route path="/faq" element={<HomePage />} />
 
                 {/* Admin Routes */}
                 <Route path="/admin/login" element={<AdminLoginPage />} />
                 <Route path="/admin" element={<AdminDashboardPage />} />
+                <Route path="/admin/:tab" element={<AdminDashboardPage />} />
 
                 {/* 404 Catch-All */}
                 <Route path="*" element={<NotFoundPage />} />

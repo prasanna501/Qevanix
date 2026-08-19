@@ -33,10 +33,26 @@ export const HomePage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
+    const sectionPathMap: Record<string, string> = {
+      '/about': 'about',
+      '/skills': 'skills',
+      '/services': 'services',
+      '/projects': 'projects',
+      '/experience': 'experience',
+      '/education': 'education',
+      '/certifications': 'certifications',
+      '/contact': 'contact',
+      '/testimonials': 'testimonials',
+      '/faq': 'faq',
+    };
+
+    const targetId = location.hash
+      ? location.hash.replace('#', '')
+      : sectionPathMap[location.pathname];
+
+    if (targetId) {
       const scrollToElement = () => {
-        const elem = document.getElementById(id);
+        const elem = document.getElementById(targetId);
         if (elem) {
           elem.scrollIntoView({ behavior: 'smooth' });
         }
@@ -48,6 +64,8 @@ export const HomePage: React.FC = () => {
         clearTimeout(timer1);
         clearTimeout(timer2);
       };
+    } else if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [location.pathname, location.hash]);
 

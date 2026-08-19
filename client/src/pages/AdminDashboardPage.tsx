@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { api } from '../services/api';
@@ -67,9 +67,35 @@ export const AdminDashboardPage: React.FC = () => {
   const { user, isAuthenticated, logout, isLoading: authLoading } = useAuth();
   const { success, error, info } = useToast();
   const navigate = useNavigate();
+  const { tab } = useParams<{ tab?: string }>();
 
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const validTabs: Record<string, Tab> = {
+    overview: 'overview',
+    profile: 'profile',
+    projects: 'projects',
+    skills: 'skills',
+    services: 'services',
+    experience: 'experience',
+    education: 'education',
+    certifications: 'certifications',
+    testimonials: 'testimonials',
+    blog: 'blog',
+    faqs: 'faqs',
+    messages: 'messages',
+    socials: 'socials',
+    'social-links': 'socials',
+    resume: 'profile',
+  };
+
+  const initialTab: Tab = (tab && validTabs[tab.toLowerCase()]) || 'overview';
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (tab && validTabs[tab.toLowerCase()]) {
+      setActiveTab(validTabs[tab.toLowerCase()]);
+    }
+  }, [tab]);
 
   // Data States
   const [stats, setStats] = useState<DashboardStats | null>(null);
